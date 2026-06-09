@@ -10,12 +10,10 @@ const PORT = process.env.PORT || 5000;
 
 // Middleware
 app.use(cors({
-  origin: [
-    'http://localhost:5173',
-    'https://customer-support-ticket-system-rho.vercel.app'
-  ],
-  credentials: true
+  origin: '*',
+  credentials: false
 }));
+
 app.use(express.json());
 app.use('/uploads', express.static('uploads'));
 
