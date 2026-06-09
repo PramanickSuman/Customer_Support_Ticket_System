@@ -3,7 +3,9 @@ const cors = require('cors');
 const dotenv = require('dotenv');
 const pool = require('./config/database');
 
-dotenv.config();
+if (process.env.NODE_ENV !== 'production') {
+  dotenv.config();
+}
 
 const app = express();
 const PORT = process.env.PORT || 5000;
