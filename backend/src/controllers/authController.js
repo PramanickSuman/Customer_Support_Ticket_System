@@ -22,7 +22,7 @@ const register = async (req, res) => {
         // Insert new user
         const [result] = await pool.execute(
             'INSERT INTO users (name, email, password, role) VALUES (?, ?, ?, ?)',
-            [name, email, hashedPassword, role || 'customer']
+            [name, email, hashedPassword, role || 'user']
         );
 
         res.status(201).json({
