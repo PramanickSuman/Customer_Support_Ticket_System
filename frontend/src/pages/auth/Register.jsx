@@ -41,7 +41,7 @@ export default function Register() {
             <label>Role</label>
             <select value={form.role} onChange={e => setForm({...form, role: e.target.value})}>
               <option value="customer">Customer</option>
-              <option value="agent">Support Agent</option>
+              <option value="support_agent">Support Agent</option>
               <option value="admin">Admin</option>
             </select>
           </div>
