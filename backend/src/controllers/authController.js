@@ -8,7 +8,8 @@ const register = async (req, res) => {
 
         // Check if user already exists
         const [existingUser] = await pool.execute(
-            'SELECT id FROM users WHERE email = ?', [email]
+            'SELECT id FROM users WHERE email = ?', 
+            [email]
         );
 
         if (existingUser.length > 0) {
@@ -19,18 +20,21 @@ const register = async (req, res) => {
         const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(password, salt);
 
+        // Determine if approved (admins are auto-approved)
+        const isApproved = role === 'admin' ? 1 : 0;
+
         // Insert new user
         const [result] = await pool.execute(
-    'INSERT INTO users (name, email, password, role, is_approved) VALUES (?, ?, ?, ?, ?)',
-    [name, email, hashedPassword, role || 'customer', role === 'admin' ? 1 : 0]
-);
+            'INSERT INTO users (name, email, password, role, is_approved) VALUES (?, ?, ?, ?, ?)',
+            [name, email, hashedPassword, role || 'customer', isApproved]
+        );
 
         res.status(201).json({
             message: 'User registered successfully',
             userId: result.insertId
         });
     } catch (error) {
-        console.error(error);
+        console.error('Registration error:', error);
         res.status(500).json({ message: 'Server error during registration' });
     }
 };
