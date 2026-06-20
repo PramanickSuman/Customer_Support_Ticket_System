@@ -36,6 +36,7 @@ app.get('/api/health', async (req, res) => {
 // Routes
 app.use('/api/auth', require('./routes/authRoutes'));
 app.use('/api/tickets', require('./routes/ticketRoutes'));
+app.use('/api/admin', require('./routes/adminRoutes'));
 
 app.listen(PORT, () => {
   console.log(`🚀 Server running on http://localhost:${PORT}`);
