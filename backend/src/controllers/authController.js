@@ -59,6 +59,11 @@ const login = async (req, res) => {
             return res.status(400).json({ message: 'Invalid email or password' });
         }
 
+        // Check if support_agent is approved
+        if (user.role === 'support_agent' && !user.is_approved) {
+            return res.status(403).json({ message: 'Your account is pending admin approval. Please contact admin.' });
+        }
+
         // Generate JWT Token
         const token = jwt.sign(
             { 
@@ -81,7 +86,7 @@ const login = async (req, res) => {
             }
         });
     } catch (error) {
-        console.error(error);
+        console.error('Login error:', error);
         res.status(500).json({ message: 'Server error during login' });
     }
 };
