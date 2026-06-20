@@ -30,7 +30,7 @@ const register = async (req, res) => {
             userId: result.insertId
         });
     } catch (error) {
-        console.error(error);
+        console.error('Registration error:', error.message);
         res.status(500).json({ message: 'Server error during registration' });
     }
 };
