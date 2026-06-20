@@ -21,8 +21,8 @@ const register = async (req, res) => {
 
         // Insert new user
         const [result] = await pool.execute(
-            'INSERT INTO users (name, email, password, role) VALUES (?, ?, ?, ?)',
-            [name, email, hashedPassword, role || 'customer']
+            'INSERT INTO users (name, email, password, role, is_approved) VALUES (?, ?, ?, ?, ?)',
+            [name, email, hashedPassword, role || 'customer', role === 'admin' ? true : false]
         );
 
         res.status(201).json({
@@ -48,6 +48,11 @@ const login = async (req, res) => {
         }
 
         const user = users[0];
+
+        // Check if support_agent is approved
+        if (user.role === 'support_agent' && !user.is_approved) {
+            return res.status(403).json({ message: 'Your account is pending admin approval. Please contact admin.' });
+        }
 
         // Compare password
         const isMatch = await bcrypt.compare(password, user.password);
@@ -77,7 +82,7 @@ const login = async (req, res) => {
             }
         });
     } catch (error) {
-        console.error(error);
+        console.error('Login error:', error.message);
         res.status(500).json({ message: 'Server error during login' });
     }
 };
