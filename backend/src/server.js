@@ -12,10 +12,8 @@ const PORT = process.env.PORT || 5000;
 
 // CORS - Allow frontend origin
 app.use(cors({
-  origin: 'https://customer-support-ticket-system-rho.vercel.app',
-  credentials: true,
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization']
+  origin: '*',
+  credentials: false
 }));
 
 // Preflight requests
