@@ -21,7 +21,7 @@ const register = async (req, res) => {
 
         // Insert new user
         const [result] = await pool.execute(
-            'INSERT INTO users (name, email, password, role) VALUES (?, ?, ?, ?)',
+          'INSERT INTO users (name, email, password, role, is_approved) VALUES (?, ?, ?, ?, ?)',
             [name, email, hashedPassword, role || 'user']
         );
 
