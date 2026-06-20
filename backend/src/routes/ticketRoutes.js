@@ -44,19 +44,10 @@
 // ... rest of your routes
 
 
-cat > ticketRoutes.js << 'EOF'
 const express = require('express');
 const router = express.Router();
 const authenticate = require('../middleware/auth');
 const { createTicket, getTickets, getTicketById, updateTicketStatus, deleteTicket, addComment, getComments } = require('../controllers/ticketController');
-
-// CORS preflight
-router.options('*', (req, res) => {
-  res.header('Access-Control-Allow-Origin', 'https://customer-support-ticket-system-rho.vercel.app');
-  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
-  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-  res.sendStatus(200);
-});
 
 router.post('/', authenticate, createTicket);
 router.get('/', authenticate, getTickets);
@@ -67,4 +58,3 @@ router.post('/:id/comments', authenticate, addComment);
 router.get('/:id/comments', authenticate, getComments);
 
 module.exports = router;
-EOF
