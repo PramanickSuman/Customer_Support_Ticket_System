@@ -21,9 +21,9 @@ const register = async (req, res) => {
 
         // Insert new user
         const [result] = await pool.execute(
-          'INSERT INTO users (name, email, password, role, is_approved) VALUES (?, ?, ?, ?, ?)',
-            [name, email, hashedPassword, role || 'user']
-        );
+    'INSERT INTO users (name, email, password, role, is_approved) VALUES (?, ?, ?, ?, ?)',
+    [name, email, hashedPassword, role || 'customer', role === 'admin' ? 1 : 0]
+);
 
         res.status(201).json({
             message: 'User registered successfully',
