@@ -10,26 +10,23 @@ if (process.env.NODE_ENV !== 'production') {
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-// CORS Middleware - MUST be first
-const corsOptions = {
-  origin: [
-    'http://localhost:5173',
-    'https://customer-support-ticket-system-rho.vercel.app'
-  ],
+// CORS - Allow frontend origin
+app.use(cors({
+  origin: 'https://customer-support-ticket-system-rho.vercel.app',
+  credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization'],
-  credentials: true
-};
+  allowedHeaders: ['Content-Type', 'Authorization']
+}));
 
-app.use(cors(corsOptions));
-app.options('*', cors(corsOptions));
+// Preflight requests
+app.options('*', cors());
 
 app.use(express.json());
 app.use('/uploads', express.static('uploads'));
 
 // Test Routes
 app.get('/', (req, res) => {
-  res.send('✅ Customer Support Ticket System Backend is Running!');
+  res.send('✅ Backend Running!');
 });
 
 app.get('/api/health', async (req, res) => {
