@@ -10,14 +10,11 @@ if (process.env.NODE_ENV !== 'production') {
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-// CORS - Allow frontend origin
+// CORS
 app.use(cors({
   origin: '*',
   credentials: false
 }));
-
-// Preflight requests
-app.options('*', cors());
 
 app.use(express.json());
 app.use('/uploads', express.static('uploads'));
