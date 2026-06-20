@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const axiosInstance = axios.create({
- baseURL: 'https://customer-support-ticket-system-lnem-rjsp4b8nf.vercel.app/api',
+  baseURL: '/api',
 });
 
 axiosInstance.interceptors.request.use((config) => {
