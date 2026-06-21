@@ -9,7 +9,7 @@ const createTicket = async (req, res) => {
         const userId = req.user.id;
 
         const [result] = await pool.execute(
-            `INSERT INTO tickets (title, description, category, priority, created_by) 
+            `INSERT INTO tickets (title, description, category, priority, user_id) 
              VALUES (?, ?, ?, ?, ?)`,
             [title, description, category, priority || 'medium', userId]
         );
