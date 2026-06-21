@@ -51,8 +51,7 @@ export default function TicketDetail() {
   const getNextStatuses = (currentStatus) => {
     const flow = {
       'open': ['in_progress'],
-      'in_progress': ['resolved'],
-      'resolved': ['closed'],
+      'in_progress': ['closed'],
       'closed': []
     };
     return flow[currentStatus] || [];
@@ -61,7 +60,7 @@ export default function TicketDetail() {
   if (!ticket) return <div className="container" style={{ paddingTop: '30px' }}>Loading...</div>;
 
   const nextStatuses = getNextStatuses(ticket.status);
-  const canChangeStatus = user?.role === 'agent' || user?.role === 'admin';
+  const canChangeStatus = user?.role === 'support_agent' || user?.role === 'admin';
   const canDelete = user?.role === 'admin';
 
   return (

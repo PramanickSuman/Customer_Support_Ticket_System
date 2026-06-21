@@ -1,4 +1,3 @@
-
 const pool = require('../config/database');
 const aiService = require('../services/aiService');
 
@@ -28,7 +27,7 @@ const getTicketById = async (req, res) => {
   try {
     const [tickets] = await pool.execute(
       `SELECT t.*, u.name as customer_name 
-       FROM tickets t JOIN users u ON t.created_by = u.id 
+       FROM tickets t JOIN users u ON t.user_id = u.id 
        WHERE t.id = ?`, [req.params.id]
     );
     if (tickets.length === 0) return res.status(404).json({ message: 'Ticket not found' });
@@ -74,11 +73,11 @@ const getTickets = async (req, res) => {
         let query = `
             SELECT t.*, u.name as customer_name 
             FROM tickets t
-            JOIN users u ON t.created_by = u.id
+            JOIN users u ON t.user_id = u.id
         `;
 
         if (userRole === 'customer') {
-            query += ` WHERE t.created_by = ?`;
+            query += ` WHERE t.user_id = ?`;
         }
 
         query += ` ORDER BY t.created_at DESC`;
@@ -148,23 +147,12 @@ const deleteTicket = async (req, res) => {
 };
 
 module.exports = { 
-    createTicket, 
-    getTickets, 
-    summarizeTicket 
-};
-
-module.exports = { 
   createTicket, 
   getTickets, 
   summarizeTicket,
   getTicketById,
   addComment,
-  getComments
+  getComments,
+  updateTicketStatus, 
+  deleteTicket
 };
-
-module.exports = { 
-  createTicket, getTickets, summarizeTicket,
-  getTicketById, addComment, getComments,
-  updateTicketStatus, deleteTicket
-};
-
