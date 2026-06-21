@@ -47,11 +47,24 @@
 const express = require('express');
 const router = express.Router();
 const authenticate = require('../middleware/auth');
-const { createTicket, getTickets, getTicketById, updateTicketStatus, deleteTicket, addComment, getComments } = require('../controllers/ticketController');
+const { createTicket, getTickets, getTicketById, updateTicketStatus, deleteTicket, addComment, getComments, summarizeTicket } = require('../controllers/ticketController');
+
+// CORS middleware
+router.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  
+  if (req.method === 'OPTIONS') {
+    return res.sendStatus(200);
+  }
+  next();
+});
 
 router.post('/', authenticate, createTicket);
 router.get('/', authenticate, getTickets);
 router.get('/:id', authenticate, getTicketById);
+router.get('/:id/summarize', authenticate, summarizeTicket);
 router.put('/:id/status', authenticate, updateTicketStatus);
 router.delete('/:id', authenticate, deleteTicket);
 router.post('/:id/comments', authenticate, addComment);
