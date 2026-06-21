@@ -37,7 +37,6 @@ export default function TicketList() {
           <option value="all">All Status</option>
           <option value="open">Open</option>
           <option value="in_progress">In Progress</option>
-          <option value="resolved">Resolved</option>
           <option value="closed">Closed</option>
         </select>
         <select value={priority} onChange={e => setPriority(e.target.value)} style={{ width: 'auto' }}>

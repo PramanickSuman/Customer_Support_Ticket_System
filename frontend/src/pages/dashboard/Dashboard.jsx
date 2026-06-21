@@ -22,7 +22,7 @@ export default function Dashboard() {
     total: tickets.length,
     open: tickets.filter(t => t.status === 'open').length,
     in_progress: tickets.filter(t => t.status === 'in_progress').length,
-    resolved: tickets.filter(t => t.status === 'resolved').length,
+    closed: tickets.filter(t => t.status === 'closed').length,
   };
 
   return (
@@ -39,7 +39,7 @@ export default function Dashboard() {
         )}
       </div>
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '16px', marginBottom: '24px' }}>
-        {[['Total', stats.total, '#4f46e5'], ['Open', stats.open, '#3b82f6'], ['In Progress', stats.in_progress, '#f59e0b'], ['Resolved', stats.resolved, '#22c55e']].map(([label, val, color]) => (
+        {[['Total', stats.total, '#4f46e5'], ['Open', stats.open, '#3b82f6'], ['In Progress', stats.in_progress, '#f59e0b'], ['Closed', stats.closed, '#22c55e']].map(([label, val, color]) => (
           <div key={label} className="card" style={{ textAlign: 'center', borderTop: `3px solid ${color}` }}>
             <div style={{ fontSize: '28px', fontWeight: 700, color }}>{val}</div>
             <div style={{ fontSize: '13px', color: '#6b7280' }}>{label}</div>

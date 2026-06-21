@@ -7,7 +7,7 @@ export default function TicketCard({ ticket }) {
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <h3 style={{ fontSize: '16px', marginBottom: '6px' }}>{ticket.title}</h3>
         <div style={{ display: 'flex', gap: '8px' }}>
-          <span className={`badge badge-${ticket.status}`}>{ticket.status}</span>
+          <span className={`badge badge-${ticket.status}`}>{ticket.status.replace('_', ' ')}</span>
           <span className={`badge badge-${ticket.priority}`}>{ticket.priority}</span>
         </div>
       </div>
